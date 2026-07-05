@@ -1,0 +1,127 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String?   @unique
+  passwordHash String?
+  phone        String?   @unique
+  name         String?
+  image        String?
+  role         String    @default("USER") // USER, ADMIN
+  addresses    Address[]
+  orders       Order[]
+  reviews      Review[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  phone      String
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String   @default("India")
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Product {
+  id               String           @id @default(cuid())
+  name             String
+  description      String
+  category         String           // Bedsheets, Cushion Covers, Quilts & Comforters, Curtains, Table & Kitchen Linen
+  fabric           String           // e.g., "100% Organic Cotton", "Pure Linen"
+  threadCount      Int?             // e.g., 300, 400
+  gsm              Int?             // e.g., 200, 150
+  careInstructions String
+  basePrice        Float
+  images           ProductImage[]
+  isFeatured       Boolean          @default(false)
+  rating           Float            @default(0.0)
+  ratingCount      Int              @default(0)
+  variants         ProductVariant[]
+  reviews          Review[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  order     Int     @default(0)
+}
+
+model ProductVariant {
+  id              String      @id @default(cuid())
+  productId       String
+  product         Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sku             String      @unique
+  size            String      // e.g., "King", "Queen", "Single", "16x16 inches", "5 ft"
+  color           String      // e.g., "Ivory White", "Alemah Red", "Espresso Brown"
+  colorCode       String      @default("#ffffff")
+  stock           Int         @default(10)
+  priceAdjustment Float       @default(0.0) // Added to basePrice
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  guestName       String?
+  guestEmail      String?
+  guestPhone      String?
+  status          String      @default("PENDING") // PENDING, PLACED, SHIPPED, OUT_FOR_DELIVERY, DELIVERED, CANCELLED
+  paymentMethod   String      // PHONEPE, COD
+  paymentStatus   String      @default("PENDING") // PENDING, SUCCESS, FAILED
+  phonepeTxnId    String?     @unique
+  totalAmount     Float
+  shippingAddress String      // Serialized JSON or block string of shipping address
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String         @id @default(cuid())
+  orderId   String
+  order     Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+  quantity  Int
+  price     Float          // Price at time of purchase (including variant priceAdjustment)
+}
+
+model Review {
+  id        String        @id @default(cuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  rating    Int           // 1 to 5 stars
+  comment   String
+  images    ReviewImage[]
+  createdAt DateTime      @default(now())
+}
+
+model ReviewImage {
+  id       String @id @default(cuid())
+  reviewId String
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  url      String
+}

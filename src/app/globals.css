@@ -1,26 +1,139 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand palette from the user-supplied image */
+  --alemah-red-600: #9D3233;   /* primary brand color - Crimson Red (#9D3233) */
+  --alemah-red-700: #D75A4D;   /* hover/pressed - Terracotta (#D75A4D) */
+  --alemah-red-800: #512125;   /* deep burgundy accent (#512125) */
+  --alemah-red-100: #F67C79;   /* soft salmon/rose badges (#F67C79) */
+  --alemah-red-050: #FFF5F5;   /* extremely soft red background tint */
+
+  /* Neutrals aligned to warm cream and burgundy text */
+  --alemah-ivory:   #ffffff;   /* primary background - Canvas white */
+  --alemah-cream:   #F6EBBD;   /* card/section background - Cream parchment (#F6EBBD) */
+  --alemah-sand:    #EBDCA0;   /* border, divider - warm sand */
+  --alemah-espresso:#512125;   /* primary text - Deep burgundy (#512125) */
+  --alemah-taupe:   #7A4D50;   /* secondary text - Soft burgundy */
+
+  /* Accent */
+  --alemah-gold:    #D75A4D;   /* stars and ratings highlight */
+
+  /* iOS-system feedback colors, kept for accessibility */
+  --ios-green:      #2E6B3E;   /* deep warm green success */
+  --ios-red:        #9D3233;   /* error */
+  --ios-blue:       #2A597F;   /* info */
+  --ios-yellow:     #E5A93C;   /* warning */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-background: var(--alemah-ivory);
+  --color-foreground: var(--alemah-espresso);
+
+  --color-alemah-red-600: var(--alemah-red-600);
+  --color-alemah-red-700: var(--alemah-red-700);
+  --color-alemah-red-800: var(--alemah-red-800);
+  --color-alemah-red-100: var(--alemah-red-100);
+  --color-alemah-red-050: var(--alemah-red-050);
+
+  --color-alemah-ivory: var(--alemah-ivory);
+  --color-alemah-cream: var(--alemah-cream);
+  --color-alemah-sand: var(--alemah-sand);
+  --color-alemah-espresso: var(--alemah-espresso);
+  --color-alemah-taupe: var(--alemah-taupe);
+  --color-alemah-gold: var(--alemah-gold);
+
+  --color-ios-green: var(--ios-green);
+  --color-ios-red: var(--ios-red);
+  --color-ios-blue: var(--ios-blue);
+  --color-ios-yellow: var(--ios-yellow);
+
+  --font-serif: var(--font-serif), "Lora", Georgia, serif;
+  --font-sans: "Satoshi", -apple-system, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--alemah-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--alemah-sand);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--alemah-taupe);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Smooth HTML scroll default */
+html {
+  scroll-behavior: auto;
+  background-color: var(--alemah-ivory);
+  color: var(--alemah-espresso);
 }
+
+/* Watermark backdrop pattern: dotted-and-diagonal-line motif */
+.textile-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23EBDCA0' fill-opacity='0.08' fill-rule='evenodd'%3E%3Ccircle cx='5' cy='5' r='1'/%3E%3Ccircle cx='25' cy='5' r='1'/%3E%3Ccircle cx='15' cy='15' r='1'/%3E%3Ccircle cx='35' cy='15' r='1'/%3E%3Ccircle cx='5' cy='25' r='1'/%3E%3Ccircle cx='25' cy='25' r='1'/%3E%3Ccircle cx='15' cy='35' r='1'/%3E%3Ccircle cx='35' cy='35' r='1'/%3E%3Cpath d='M0 40L40 0H39L0 39v1zm1-1L40 1V0H39L0 39v1z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Frosted glass / backdrop blur */
+.frosted-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+}
+
+/* iOS Active States & Pill Segment Controls */
+.ios-active-scale {
+  transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.ios-active-scale:active {
+  transform: scale(0.96);
+}
+
+/* Custom fade effects */
+.gsap-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Keyframe Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulseSlow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+@keyframes loadingProgress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+.animate-slide-up    { animation: slideUp   0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-left  { animation: slideLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-right { animation: slideRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in     { animation: fadeIn    0.15s ease-out both; }
+.animate-pulse-slow  { animation: pulseSlow 2.5s ease-in-out infinite; }
+.animate-loading-bar { animation: loadingProgress 1.4s infinite linear; }
+
