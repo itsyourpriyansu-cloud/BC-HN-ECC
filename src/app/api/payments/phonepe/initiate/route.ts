@@ -6,9 +6,39 @@ import {
   PHONEPE_MERCHANT_ID,
 } from "@/lib/phonepe";
 
+interface CheckoutItem {
+  variantId: string;
+  quantity: number;
+  price: number;
+}
+
+interface PaymentRequestBody {
+  userId?: string | null;
+  guestInfo?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+  } | null;
+  items?: CheckoutItem[];
+  totalAmount?: number;
+  shippingAddress?: Record<string, string>;
+  paymentMethod?: "PHONEPE" | "COD";
+}
+
+interface PhonePePayResponse {
+  success?: boolean;
+  data?: {
+    instrumentResponse?: {
+      redirectInfo?: {
+        url?: string;
+      };
+    };
+  };
+}
+
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as PaymentRequestBody;
     const {
       userId,
       guestInfo,
@@ -35,7 +65,7 @@ export async function POST(req: Request) {
         totalAmount: totalAmount,
         shippingAddress: JSON.stringify(shippingAddress),
         items: {
-          create: items.map((item: any) => ({
+          create: items.map((item) => ({
             variantId: item.variantId,
             quantity: item.quantity,
             price: item.price,
@@ -103,7 +133,7 @@ export async function POST(req: Request) {
       }),
     });
 
-    const responseData = await response.json();
+    const responseData = (await response.json()) as PhonePePayResponse;
 
     if (responseData.success && responseData.data?.instrumentResponse?.redirectInfo?.url) {
       return NextResponse.json({
@@ -118,8 +148,9 @@ export async function POST(req: Request) {
         details: responseData,
       }, { status: 500 });
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Payment Initiate Error:", error);
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: "Internal Server Error", details: message }, { status: 500 });
   }
 }

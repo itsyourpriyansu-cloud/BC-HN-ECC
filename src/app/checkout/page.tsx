@@ -5,7 +5,7 @@ import { useCart } from "@/hooks/useCart";
 import { useSession } from "next-auth/react";
 import { useUIStore } from "@/store/useUIStore";
 import { useRouter } from "next/navigation";
-import { Mail, User, Phone, MapPin, Truck, CreditCard, ShoppingBag, ArrowRight, ShieldCheck } from "lucide-react";
+import { Mail, MapPin, Truck, CreditCard, ShoppingBag, ArrowRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 export default function CheckoutPage() {
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
         addToast(data.error || "Order compilation failed", "error");
         setLoading(false);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       addToast("An error occurred during order submission.", "error");
       setLoading(false);

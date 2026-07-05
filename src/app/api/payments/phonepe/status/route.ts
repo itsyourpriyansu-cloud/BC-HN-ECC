@@ -29,8 +29,9 @@ export async function GET(req: Request) {
     console.log(`Polling transaction status for Transaction: ${txnId}`);
     const data = await getTransactionStatus(txnId);
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Status check route error:", error);
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: "Internal Server Error", details: message }, { status: 500 });
   }
 }

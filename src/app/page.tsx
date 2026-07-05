@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import ProductCard from "@/components/product/ProductCard";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Truck, RotateCcw, Heart } from "lucide-react";
+import { ArrowRight, ShieldCheck, Truck, RotateCcw } from "lucide-react";
 import HeroCarousel from "@/components/home/HeroCarousel";
 
 export default async function HomePage() {
@@ -148,7 +148,7 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {featuredProducts.map((prod) => (
-              <ProductCard key={prod.id} product={prod as any} />
+              <ProductCard key={prod.id} product={prod} />
             ))}
           </div>
         </div>
@@ -176,10 +176,10 @@ export default async function HomePage() {
             </h2>
             <div className="w-16 h-0.5 bg-alemah-red-600 rounded-full my-1"></div>
             <p className="font-sans text-sm sm:text-base text-alemah-taupe leading-relaxed">
-              We believe premium bedding isn't just about high thread counts, but long-staple organic cotton fibers, single-ply yarns, and authentic craftsmanship. 
+              We believe premium bedding isn&apos;t just about high thread counts, but long-staple organic cotton fibers, single-ply yarns, and authentic craftsmanship.
             </p>
             <p className="font-sans text-sm sm:text-base text-alemah-taupe leading-relaxed">
-              From our cloud-soft Jaipuri mulmul quilts hand-carded by generational craft artisans to our heavy canvas cushion covers featuring Alemah's signature weaving watermark motif, every product represents heritage quality, tailored for modern comfort.
+              From our cloud-soft Jaipuri mulmul quilts hand-carded by generational craft artisans to our heavy canvas cushion covers featuring Alemah&apos;s signature weaving watermark motif, every product represents heritage quality, tailored for modern comfort.
             </p>
             <Link
               href="/story"

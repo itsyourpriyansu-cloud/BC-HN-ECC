@@ -65,8 +65,8 @@ export default function AuthModal() {
         });
         if (!res?.error) handleClose();
       }
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -115,8 +115,8 @@ export default function AuthModal() {
         addToast("Logged in successfully!", "success");
         handleClose();
       }
-    } catch (err: any) {
-      setError(err.message || "Authentication failed");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Authentication failed");
     } finally {
       setLoading(false);
     }
@@ -331,7 +331,7 @@ export default function AuthModal() {
                   Sign in with Phone & OTP instead
                 </button>
                 <p className="text-alemah-taupe">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <button onClick={() => setMode("signup")} className="text-alemah-espresso hover:underline font-semibold">
                     Sign up
                   </button>
@@ -347,7 +347,7 @@ export default function AuthModal() {
                   Sign in with Email & Password instead
                 </button>
                 <p className="text-alemah-taupe">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <button onClick={() => setMode("signup")} className="text-alemah-espresso hover:underline font-semibold">
                     Sign up
                   </button>

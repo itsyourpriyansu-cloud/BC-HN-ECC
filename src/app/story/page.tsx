@@ -40,7 +40,7 @@ export default function OurStoryPage() {
               Alemah was born in the textile heartlands of Rajasthan, where every thread is a story passed down through generations of weavers. What started as a small atelier supplying premium bedding to boutique hotels became a beloved marketplace brand, shipping to over 50,000 homes across India.
             </p>
             <p className="font-sans text-sm text-alemah-taupe leading-relaxed">
-              Our name, Alemah, is derived from the Arabic for "knowledgeable" — reflecting our deep commitment to the craft and science of textile making: understanding fiber lengths, weave densities, dye permanence, and finish quality.
+              Our name, Alemah, is derived from the Arabic for &quot;knowledgeable&quot; - reflecting our deep commitment to the craft and science of textile making: understanding fiber lengths, weave densities, dye permanence, and finish quality.
             </p>
           </div>
           <div className="relative h-80 sm:h-96 rounded-3xl overflow-hidden shadow-lg border border-alemah-sand/30">
@@ -72,11 +72,11 @@ export default function OurStoryPage() {
             </h2>
             <div className="w-12 h-0.5 bg-alemah-red-600 rounded-full" />
             <p className="font-sans text-sm text-alemah-taupe leading-relaxed">
-              We source exclusively certified long-staple organic cotton (Supima and Giza) from controlled farms in Gujarat and Tamil Nadu. Unlike conventional short-staple cotton, our extra-long fibers create fewer breaking points in the yarn — resulting in sheets that are not just softer to the touch, but dramatically more durable.
+              We source exclusively certified long-staple organic cotton (Supima and Giza) from controlled farms in Gujarat and Tamil Nadu. Unlike conventional short-staple cotton, our extra-long fibers create fewer breaking points in the yarn - resulting in sheets that are not just softer to the touch, but dramatically more durable.
             </p>
             <div className="grid grid-cols-2 gap-4 mt-2">
               {[
-                { label: "300–400 TC", desc: "Thread Count Range" },
+                { label: "300-400 TC", desc: "Thread Count Range" },
                 { label: "100% Organic", desc: "Cotton Certified" },
                 { label: "Oeko-Tex", desc: "Standard 100 Certified" },
                 { label: "Hand-quilted", desc: "Mulmul Quilts" },

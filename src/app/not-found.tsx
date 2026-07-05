@@ -11,7 +11,7 @@ export default function NotFound() {
         <div className="-mt-8">
           <h1 className="font-serif text-3xl font-extrabold text-alemah-espresso">Page Not Found</h1>
           <p className="font-sans text-sm text-alemah-taupe mt-2 max-w-xs mx-auto leading-relaxed">
-            This page seems to have gone missing from our textile collection. Let's get you back to something beautiful.
+            This page seems to have gone missing from our textile collection. Let&apos;s get you back to something beautiful.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs mt-2">

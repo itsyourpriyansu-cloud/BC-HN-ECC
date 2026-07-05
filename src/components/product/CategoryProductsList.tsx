@@ -11,7 +11,6 @@ interface CategoryProductsListProps {
 }
 
 export default function CategoryProductsList({
-  category,
   products,
 }: CategoryProductsListProps) {
   const filterOpen = useUIStore((state) => state.filterOpen);

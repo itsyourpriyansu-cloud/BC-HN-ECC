@@ -10,7 +10,7 @@ export function useCart() {
 
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
-    setHydrated(true);
+    queueMicrotask(() => setHydrated(true));
   }, []);
 
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);

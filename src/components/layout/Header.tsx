@@ -1,9 +1,9 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, User, Search, LogOut, Menu, X, Heart } from "lucide-react";
+import { ShoppingBag, User, Menu, X, Heart } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useUIStore } from "@/store/useUIStore";
 import { useState } from "react";

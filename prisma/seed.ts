@@ -17,7 +17,7 @@ async function main() {
   await prisma.user.deleteMany();
 
   // Create demo admin and users
-  const admin = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email: "admin@alemah.com",
       passwordHash: "$2a$12$R5qVw2hP20j6Qd5nE1T4vOz9tO6E8dKpeUj3i7hW.vS.l4.T4n4.2", // bcrypt hash for 'admin123'

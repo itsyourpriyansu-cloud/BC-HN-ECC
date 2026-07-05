@@ -118,7 +118,7 @@ self.addEventListener("push", (event) => {
     if (event.data) {
       data = event.data.json();
     }
-  } catch (e) {
+  } catch {
     data = { title: "Alemah", body: event.data ? event.data.text() : "Discover our premium textiles." };
   }
 

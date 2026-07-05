@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Grid, Search, Heart, User } from "lucide-react";
+import { Home, Grid, Heart, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useUIStore } from "@/store/useUIStore";
 

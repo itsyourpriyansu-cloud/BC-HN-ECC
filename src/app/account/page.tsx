@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Package, MapPin, Heart, User, LogOut } from "lucide-react";
+import { Package, MapPin, LogOut } from "lucide-react";
 
 export default async function AccountPage() {
   const session = await getServerSession(authOptions);

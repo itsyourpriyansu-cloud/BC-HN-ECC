@@ -9,6 +9,15 @@ export function calculateChecksum(payloadBase64: string, endpoint: string): stri
   return `${sha256}###${saltIndex}`;
 }
 
+export function verifyChecksum(payloadBase64: string, endpoint: string, checksum: string): boolean {
+  if (!checksum) return false;
+
+  const expected = Buffer.from(calculateChecksum(payloadBase64, endpoint));
+  const received = Buffer.from(checksum);
+
+  return expected.length === received.length && crypto.timingSafeEqual(expected, received);
+}
+
 export const PHONEPE_API_URL = process.env.PHONEPE_ENV === "production"
   ? "https://api.phonepe.com/apis/hermes/pg"
   : "https://api-preprod.phonepe.com/apis/pg-sandbox";

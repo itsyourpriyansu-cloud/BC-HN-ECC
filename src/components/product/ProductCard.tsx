@@ -6,27 +6,10 @@ import { Star, ShoppingBag, Heart } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useUIStore } from "@/store/useUIStore";
 import { useState } from "react";
+import type { ProductWithRelations } from "@/types/product";
 
 export interface ProductCardProps {
-  product: {
-    id: string;
-    name: string;
-    description: string;
-    category: string;
-    fabric: string;
-    basePrice: number;
-    rating: number;
-    ratingCount: number;
-    images: { url: string; order: number }[];
-    variants: {
-      id: string;
-      sku: string;
-      size: string;
-      color: string;
-      priceAdjustment: number;
-      stock: number;
-    }[];
-  };
+  product: ProductWithRelations;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {

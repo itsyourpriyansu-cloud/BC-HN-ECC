@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { CheckCircle, Package, Truck, Home, Clock } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface OrderPageProps {
   params: Promise<{ id: string }>;
@@ -109,7 +110,7 @@ export default async function OrderTrackingPage({ params }: OrderPageProps) {
               <div key={item.id} className="flex gap-4 items-center text-xs border-b border-alemah-sand/20 pb-3 last:border-b-0 last:pb-0">
                 {image && (
                   <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-alemah-cream shrink-0 border border-alemah-sand/30">
-                    <img src={image} alt={product.name} className="object-cover w-full h-full" />
+                    <Image src={image} alt={product.name} fill sizes="48px" className="object-cover" />
                   </div>
                 )}
                 <div className="flex-1">

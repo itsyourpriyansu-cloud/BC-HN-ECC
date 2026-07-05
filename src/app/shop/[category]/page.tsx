@@ -55,12 +55,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           {decodedCategory}
         </h1>
         <p className="font-sans text-sm text-alemah-taupe mt-2">
-          Discover Alemah's curated selection of premium {decodedCategory.toLowerCase()}, crafted with legacy weaving and styling details.
+          Discover Alemah&apos;s curated selection of premium {decodedCategory.toLowerCase()}, crafted with legacy weaving and styling details.
         </p>
       </div>
 
       {/* Filterable Products List */}
-      <CategoryProductsList category={decodedCategory} products={products as any} />
+      <CategoryProductsList category={decodedCategory} products={products} />
     </div>
   );
 }

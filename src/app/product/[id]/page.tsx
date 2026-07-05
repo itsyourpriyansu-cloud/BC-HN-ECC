@@ -49,8 +49,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <ProductDetailWrapper
-      product={product as any}
-      crossSells={crossSells as any}
+      product={product}
+      crossSells={crossSells}
     />
   );
 }

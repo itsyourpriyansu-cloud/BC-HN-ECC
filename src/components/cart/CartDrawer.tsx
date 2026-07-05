@@ -58,7 +58,7 @@ export default function CartDrawer() {
                   <strong>FREE Delivery</strong>
                 </span>
               ) : (
-                <span className="text-ios-green font-semibold">Congratulations! You've unlocked FREE shipping. 🎉</span>
+                <span className="text-ios-green font-semibold">Congratulations! You&apos;ve unlocked FREE shipping.</span>
               )}
               <span className="text-[10px] text-alemah-taupe font-medium">Goal: ₹{FREE_SHIPPING_LIMIT}</span>
             </div>

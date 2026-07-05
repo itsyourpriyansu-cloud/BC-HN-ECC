@@ -64,7 +64,7 @@ export default function HeroCarousel() {
             </span>
           </h1>
           <p className="font-sans text-base sm:text-lg text-alemah-taupe leading-relaxed">
-            For over a decade, we've crafted premium bedding and textiles. Welcome to our flagship digital home, woven direct from our looms to yours.
+            For over a decade, we&apos;ve crafted premium bedding and textiles. Welcome to our flagship digital home, woven direct from our looms to yours.
           </p>
           <div className="flex gap-4 mt-2">
             <Link

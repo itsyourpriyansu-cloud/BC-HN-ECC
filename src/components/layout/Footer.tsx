@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Globe, Heart } from "lucide-react";
+import { Globe } from "lucide-react";
 
 export default function Footer() {
   const footerLinks = [

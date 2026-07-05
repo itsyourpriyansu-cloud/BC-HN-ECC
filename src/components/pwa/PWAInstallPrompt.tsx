@@ -3,21 +3,27 @@
 import { useEffect, useState } from "react";
 import { Download, X, PlusSquare } from "lucide-react";
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+function isIOSBrowser() {
+  if (typeof window === "undefined") return false;
+  return /iPhone|iPad|iPod/.test(navigator.userAgent) && !("MSStream" in window);
+}
+
 export function PWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
+  const [isIOS] = useState(isIOSBrowser);
 
   useEffect(() => {
-    // 1. Detect if running in iOS standalone or Safari
-    const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
-    setIsIOS(isIphone && !isStandalone);
 
-    // 2. Check for Android beforeinstallprompt support
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
 
       const viewCount = parseInt(localStorage.getItem("alemah-product-views") || "0", 10);
       const dismissed = localStorage.getItem("alemah-pwa-dismissed") === "true";
@@ -95,7 +101,7 @@ export function PWAInstallPrompt() {
                 Tap the <span className="font-semibold text-alemah-espresso">Share</span> button below
               </li>
               <li>
-                Scroll down and tap <span className="font-semibold text-alemah-espresso">"Add to Home Screen"</span>{" "}
+                Scroll down and tap <span className="font-semibold text-alemah-espresso">&quot;Add to Home Screen&quot;</span>{" "}
                 <PlusSquare className="w-3.5 h-3.5 inline ml-0.5 text-alemah-espresso" />
               </li>
             </ol>

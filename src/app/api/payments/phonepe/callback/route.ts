@@ -4,7 +4,21 @@ import {
   calculateChecksum,
   PHONEPE_API_URL,
   PHONEPE_MERCHANT_ID,
+  verifyChecksum,
 } from "@/lib/phonepe";
+
+interface PhonePeStatusResponse {
+  success?: boolean;
+  code?: string;
+  message?: string;
+}
+
+interface PhonePeWebhookPayload {
+  code?: string;
+  data?: {
+    merchantTransactionId?: string;
+  };
+}
 
 // Helper to query PhonePe server directly for status (prevents client spoofing)
 async function getTransactionStatus(txnId: string) {
@@ -20,7 +34,7 @@ async function getTransactionStatus(txnId: string) {
     },
   });
 
-  return await response.json();
+  return (await response.json()) as PhonePeStatusResponse;
 }
 
 // 1. GET Request: Handles user redirection landing back on our store
@@ -89,7 +103,7 @@ export async function GET(req: Request) {
       const errorMsg = statusData.message || "payment_failed";
       return NextResponse.redirect(new URL(`/checkout?error=${encodeURIComponent(errorMsg)}`, req.url));
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Redirect Callback Error:", error);
     return NextResponse.redirect(new URL(`/checkout?error=internal_server_error`, req.url));
   }
@@ -98,7 +112,7 @@ export async function GET(req: Request) {
 // 2. POST Request: Handles PhonePe background server-to-server webhook callbacks
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as { response?: string };
     
     // Check if PhonePe sent an encrypted/base64 response payload
     if (!body.response) {
@@ -108,7 +122,7 @@ export async function POST(req: Request) {
     const base64Response = body.response;
     // Decode base64 payload
     const decodedPayloadString = Buffer.from(base64Response, "base64").toString("utf-8");
-    const payload = JSON.parse(decodedPayloadString);
+    const payload = JSON.parse(decodedPayloadString) as PhonePeWebhookPayload;
 
     const transactionId = payload.data?.merchantTransactionId;
     const paymentCode = payload.code; // PAYMENT_SUCCESS, PAYMENT_ERROR
@@ -118,6 +132,9 @@ export async function POST(req: Request) {
     // Verify webhook authenticity by recalculating checksum
     // Note: PhonePe passes checksum in X-VERIFY header of webhook
     const headerChecksum = req.headers.get("X-VERIFY") || "";
+    if (!verifyChecksum(base64Response, "", headerChecksum)) {
+      return NextResponse.json({ error: "Invalid webhook signature" }, { status: 401 });
+    }
     
     if (transactionId) {
       const order = await db.order.findFirst({
@@ -160,8 +177,9 @@ export async function POST(req: Request) {
 
     // PhonePe webhooks expect a simple JSON response confirming delivery
     return NextResponse.json({ status: "OK" });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Webhook callback processing error:", error);
-    return NextResponse.json({ error: "Error processing webhook", details: error.message }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: "Error processing webhook", details: message }, { status: 500 });
   }
 }

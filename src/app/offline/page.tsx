@@ -21,7 +21,7 @@ export default function OfflinePage() {
         </h1>
         
         <p className="font-sans text-alemah-taupe text-base leading-relaxed mb-8">
-          It seems you are currently offline. Alemah's collection will be waiting for you as soon as you reconnect.
+          It seems you are currently offline. Alemah&apos;s collection will be waiting for you as soon as you reconnect.
         </p>
 
         <div className="flex flex-col gap-3 w-full">

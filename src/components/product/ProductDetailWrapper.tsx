@@ -2,37 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Star, Truck, Heart, Minus, Plus, ShoppingBag, ChevronDown, ChevronUp, CheckCircle, AlertCircle } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import { useUIStore } from "@/store/useUIStore";
 import ProductCard from "@/components/product/ProductCard";
+import type { ProductWithRelations } from "@/types/product";
 
 interface ProductDetailWrapperProps {
-  product: {
-    id: string;
-    name: string;
-    description: string;
-    category: string;
-    fabric: string;
-    threadCount: number | null;
-    gsm: number | null;
-    careInstructions: string;
-    basePrice: number;
-    rating: number;
-    ratingCount: number;
-    images: { id?: string; url: string; order: number }[];
-    variants: {
-      id: string;
-      sku: string;
-      size: string;
-      color: string;
-      colorCode: string;
-      stock: number;
-      priceAdjustment: number;
-    }[];
-  };
-  crossSells: any[];
+  product: ProductWithRelations;
+  crossSells: ProductWithRelations[];
 }
 
 export default function ProductDetailWrapper({ product, crossSells }: ProductDetailWrapperProps) {
@@ -458,7 +436,7 @@ export default function ProductDetailWrapper({ product, crossSells }: ProductDet
               <span className="text-[10px] text-alemah-taupe font-semibold">05 July 2026</span>
             </div>
             <p className="text-alemah-taupe leading-relaxed text-xs">
-              Absolutely outstanding quality bedsheet. The thread count feels incredibly premium, with a satisfying weight. It's thick, crisp, and breathes beautifully. It stands out in comparison to general marketplace listings.
+              Absolutely outstanding quality bedsheet. The thread count feels incredibly premium, with a satisfying weight. It&apos;s thick, crisp, and breathes beautifully. It stands out in comparison to general marketplace listings.
             </p>
           </div>
         </div>
