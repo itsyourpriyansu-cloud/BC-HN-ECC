@@ -1,13 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lora } from "next/font/google";
 import "./globals.css";
-
-
-const lora = Lora({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-});
 
 import { AppProviders } from "@/components/providers/AppProviders";
 import { ScrollProvider } from "@/components/providers/ScrollProvider";
@@ -47,9 +39,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${lora.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground text-sans pb-16 md:pb-0">
+      <body className="min-h-full flex flex-col bg-background text-foreground pb-16 md:pb-0">
         <AppProviders>
           <PWAProvider>
             <ScrollProvider>

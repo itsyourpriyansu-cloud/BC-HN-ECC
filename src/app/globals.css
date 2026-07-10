@@ -1,4 +1,4 @@
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@300,400,500,700,800,900&f[]=satoshi@300,400,500,700,900&display=swap');
 @import "tailwindcss";
 
 
@@ -49,8 +49,8 @@
   --color-ios-blue: var(--ios-blue);
   --color-ios-yellow: var(--ios-yellow);
 
-  --font-serif: var(--font-serif), "Lora", Georgia, serif;
-  --font-sans: "Satoshi", -apple-system, system-ui, sans-serif;
+  --font-serif: "Cabinet Grotesk", sans-serif;
+  --font-sans: "Satoshi", sans-serif;
 }
 
 /* Custom Scrollbar */
@@ -74,6 +74,16 @@ html {
   scroll-behavior: auto;
   background-color: var(--alemah-ivory);
   color: var(--alemah-espresso);
+  font-family: "Satoshi", sans-serif;
+}
+
+/* Typography: Cabinet Grotesk for headings, Satoshi for body */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabinet Grotesk", sans-serif;
+}
+
+p, span, li, label, input, textarea, button, a {
+  font-family: "Satoshi", sans-serif;
 }
 
 /* Watermark backdrop pattern: dotted-and-diagonal-line motif */
