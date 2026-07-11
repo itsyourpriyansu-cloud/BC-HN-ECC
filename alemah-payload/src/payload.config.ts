@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
@@ -28,10 +30,12 @@ import { plugins } from './plugins'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const isProduction = process.env.NODE_ENV === 'production'
+const allowDemoSeed = process.env.ALLOW_DEMO_SEED === 'true'
 const databaseURL = process.env.DATABASE_URL
 const usePostgres = databaseURL?.startsWith('postgres')
+const payloadSecret = process.env.PAYLOAD_SECRET || (allowDemoSeed ? 'demo-seed-only-secret' : '')
 
-if (isProduction && !process.env.PAYLOAD_SECRET) {
+if (isProduction && !payloadSecret) {
   throw new Error('PAYLOAD_SECRET must be configured in production.')
 }
 
@@ -39,7 +43,7 @@ if (isProduction && !usePostgres) {
   throw new Error('A PostgreSQL DATABASE_URL must be configured in production.')
 }
 
-if (isProduction && !process.env.SMTP_HOST) {
+if (isProduction && !process.env.SMTP_HOST && !allowDemoSeed) {
   throw new Error('SMTP_HOST must be configured in production.')
 }
 
@@ -49,6 +53,8 @@ const db = usePostgres
         connectionString: databaseURL,
         max: Number(process.env.DATABASE_POOL_MAX || 20),
       },
+      // Shared and production-like databases must change only through committed migrations.
+      push: false,
     })
   : sqliteAdapter({
       client: {
@@ -123,7 +129,7 @@ export default buildConfig({
   endpoints: [],
   globals: [Header, Footer],
   plugins,
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: payloadSecret || 'development-only-payload-secret',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
