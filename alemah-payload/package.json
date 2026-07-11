@@ -9,6 +9,7 @@
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "import:listings": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/import-listings.ts",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "seed:demo": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed-demo.ts",

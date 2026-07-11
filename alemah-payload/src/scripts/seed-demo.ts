@@ -66,6 +66,7 @@ const product =
       gallery: [{ image: media.id }],
       inventory: 25,
       priceInINR: 2499,
+      sku: 'DEMO-COTTON-BEDSHEET',
       slug: 'demo-cotton-bedsheet',
       title: 'Demo Premium Cotton Bedsheet',
     },

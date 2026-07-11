@@ -1167,6 +1167,7 @@ export const productTshirtData: (
       },
     },
     gallery: galleryImages,
+    sku: 'SEED-TSHIRT',
     title: 'Tshirt',
     slug: 'tshirt',
     priceInUSDEnabled: true,

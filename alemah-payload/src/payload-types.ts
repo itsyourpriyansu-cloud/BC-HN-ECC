@@ -269,6 +269,65 @@ export interface Order {
 export interface Product {
   id: number;
   title: string;
+  /**
+   * Original marketplace identifier, retained for catalogue reconciliation.
+   */
+  asin?: string | null;
+  catalogue?: {
+    salesRank?: number | null;
+    /**
+     * Import note about the provenance of the displayed reference price.
+     */
+    pricingNote?: string | null;
+    /**
+     * Products with the same key represent colour variants of one merchandising group.
+     */
+    variantGroupKey?: string | null;
+    attributes?: {
+      size?: string | null;
+      sizeInches?: number | null;
+      curtainType?: string | null;
+      fabric?: string | null;
+      pattern?: string | null;
+      opacity?: string | null;
+      color?: string | null;
+      colorFamily?: string | null;
+      recommendedRoom?: string | null;
+      packOf?: number | null;
+      closureType?: string | null;
+      installation?: string | null;
+      styleNote?: string | null;
+    };
+    salesInsight?: {
+      sessions90d?: number | null;
+      unitsOrdered?: number | null;
+      revenueINR?: number | null;
+      conversionRatePct?: number | null;
+      sourceNote?: string | null;
+    };
+  };
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  seoKeywords?: {
+    focusKeyword?: string | null;
+    secondaryKeywords?:
+      | {
+          keyword?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   description?: {
     root: {
       type: string;
@@ -1584,6 +1643,64 @@ export interface VariantOptionsSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  asin?: T;
+  catalogue?:
+    | T
+    | {
+        salesRank?: T;
+        pricingNote?: T;
+        variantGroupKey?: T;
+        attributes?:
+          | T
+          | {
+              size?: T;
+              sizeInches?: T;
+              curtainType?: T;
+              fabric?: T;
+              pattern?: T;
+              opacity?: T;
+              color?: T;
+              colorFamily?: T;
+              recommendedRoom?: T;
+              packOf?: T;
+              closureType?: T;
+              installation?: T;
+              styleNote?: T;
+            };
+        salesInsight?:
+          | T
+          | {
+              sessions90d?: T;
+              unitsOrdered?: T;
+              revenueINR?: T;
+              conversionRatePct?: T;
+              sourceNote?: T;
+            };
+      };
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  seoKeywords?:
+    | T
+    | {
+        focusKeyword?: T;
+        secondaryKeywords?:
+          | T
+          | {
+              keyword?: T;
+              id?: T;
+            };
+      };
   description?: T;
   gallery?:
     | T

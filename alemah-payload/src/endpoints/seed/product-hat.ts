@@ -59,6 +59,7 @@ export const productHatData: (args: ProductArgs) => RequiredDataFromCollectionSl
       },
     },
     gallery: [{ image: galleryImage }],
+    sku: 'SEED-HAT',
     title: 'Hat',
     slug: 'hat',
     priceInUSDEnabled: true,

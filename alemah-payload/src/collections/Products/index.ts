@@ -23,7 +23,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
   ...defaultCollection,
   admin: {
     ...defaultCollection?.admin,
-    defaultColumns: ['title', 'enableVariants', '_status', 'variants.variants'],
+    defaultColumns: ['title', 'sku', 'catalogue.salesRank', 'enableVariants', '_status'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -54,6 +54,95 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
   },
   fields: [
     { name: 'title', type: 'text', required: true },
+    {
+      name: 'asin',
+      type: 'text',
+      unique: true,
+      index: true,
+      admin: {
+        description: 'Original marketplace identifier, retained for catalogue reconciliation.',
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'catalogue',
+      type: 'group',
+      admin: { position: 'sidebar' },
+      fields: [
+        { name: 'salesRank', type: 'number', admin: { readOnly: true } },
+        {
+          name: 'pricingNote',
+          type: 'textarea',
+          admin: {
+            description: 'Import note about the provenance of the displayed reference price.',
+            readOnly: true,
+          },
+        },
+        {
+          name: 'variantGroupKey',
+          type: 'text',
+          index: true,
+          admin: {
+            description: 'Products with the same key represent colour variants of one merchandising group.',
+          },
+        },
+        {
+          name: 'attributes',
+          type: 'group',
+          fields: [
+            { name: 'size', type: 'text' },
+            { name: 'sizeInches', type: 'number' },
+            { name: 'curtainType', type: 'text' },
+            { name: 'fabric', type: 'text' },
+            { name: 'pattern', type: 'text' },
+            { name: 'opacity', type: 'text' },
+            { name: 'color', type: 'text' },
+            { name: 'colorFamily', type: 'text' },
+            { name: 'recommendedRoom', type: 'text' },
+            { name: 'packOf', type: 'number' },
+            { name: 'closureType', type: 'text' },
+            { name: 'installation', type: 'text' },
+            { name: 'styleNote', type: 'text' },
+          ],
+        },
+        {
+          name: 'salesInsight',
+          type: 'group',
+          admin: { readOnly: true },
+          fields: [
+            { name: 'sessions90d', type: 'number' },
+            { name: 'unitsOrdered', type: 'number' },
+            { name: 'revenueINR', type: 'number' },
+            { name: 'conversionRatePct', type: 'number' },
+            { name: 'sourceNote', type: 'textarea' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'highlights',
+      type: 'array',
+      labels: { plural: 'Highlights', singular: 'Highlight' },
+      fields: [{ name: 'text', type: 'text', required: true }],
+    },
+    {
+      name: 'faqs',
+      type: 'array',
+      labels: { plural: 'FAQs', singular: 'FAQ' },
+      fields: [
+        { name: 'question', type: 'text', required: true },
+        { name: 'answer', type: 'textarea', required: true },
+      ],
+    },
+    {
+      name: 'seoKeywords',
+      type: 'group',
+      admin: { position: 'sidebar' },
+      fields: [
+        { name: 'focusKeyword', type: 'text' },
+        { name: 'secondaryKeywords', type: 'array', fields: [{ name: 'keyword', type: 'text' }] },
+      ],
+    },
     {
       type: 'tabs',
       tabs: [
